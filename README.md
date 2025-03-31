@@ -1,19 +1,27 @@
 # **A self-organising map algorithm**
 This repository contains an implemention of the Self-Organising Map (SOM) algorithm and an implemention of the ITCOMPSOM method in Python. The latter is a method to iteratively fill missing values in a dataset using SOMs.
 
-${\large{\color{red}\mathbf{Note\ of\ caution:}}}$ The examples applying the SOM and ITCOMPSOM algorithms provided in this repository are only for illustration purposes. Generally, careful hyperparameter tuning is necessary, such that good results are obtained while not overfitting the training data! This was not considered for the presented examples.
+${\large{\color{red}\mathbf{Note\ of\ caution:}}}$ The examples applying the SOM and ITCOMPSOM algorithms provided in this repository are only for illustration purposes. Generally, careful hyperparameter tuning is necessary, such that good results are obtained while not overfitting the training data! This was not considered for the provided examples.
 
 ---
 ## **Self-Organising Maps**
 ### Background
 A Self-Organising Map (SOM) is an unsupervised machine learning algorithm that is used to reduce the dimensionality of high-dimensional datasets to a (typically) two-dimensional neural map. During this process, the topological structure of the data is preserved, i.e. neural classes of similar data are near each other, while dissimilar classes are separated in the two-dimensional space (Kohonen, 1982). Therefore, the neural maps are referred to as topological maps in the following. The topological map consists of a preset number of classes or neurons $nc$ that are connected to each other by a neighbourhood relation. The neighbourhood relation depends on the type of lattice (either rectangular or hexagonal) and its shape (either planar or toroidal). Each neuron is characterised by a referent or weight vector $\mathbf{W^k}$, which consists of the same number of variables, hereafter referred to as features, as the input dataset. A sample of the input dataset $\mathbf{Z_l}$ can be attributed to a neuron $c_l$, which then is referred to as best-matching unit (BMU), according to the Euclidean distance $\lVert \cdot \rVert$ between the sample and the weight vectors of the topological map, i.e.
+
 $$c_l = argmin_{k \in [1,...,nc]} \left( \lVert \mathbf{Z_l} - \mathbf{W^k} \rVert   \right)$$
+
 After the SOM is initialised using random values, the topological map is trained for several iterations or epochs, during which the weight vectors are adjusted according to the input dataset. Each epoch generally consists of determining the BMU of an input sample and then adjusting the values of the weight vectors. The adjustment of the weight vectors does not only include the BMU, but also affects neurons of the topological map in the neighbourhood of the respective BMU. The spatial range of neurons around the BMU that are subject to the adjustment is determined by a neighbourhood kernel function. Additionally, the neighbourhood kernel function causes neurons that are farther away from the BMU to be less affected by the adjustment compared to neurons in close vicinity of the BMU. In the present case, a Gaussian neighbourhood kernel function is used, defined as
+
 $$h_{k, c_l}(t) = \exp \left( \frac{-\lVert \mathbf{r_c} - \mathbf{r_k} \rVert^2}{2\sigma^2(t)} \right)$$
+
 where $\mathbf{r_c}$ is the location of the BMU $c_l$ on the topological map, $\mathbf{r_k}$ are the locations of the respective other neurons, and $\sigma(t)$ is the neighbourhood radius at epoch $t$. The neighbourhood radius is chosen such that a wide area of the topological map is adjusted during early stages of the training process and then gradually reduced. The neighbourhood radius at epoch $t$ is defined as
+
 $$\sigma(t) = \sigma_1 \exp \left( -\beta t \right)$$
+
 where $\sigma_1$ is the neighbourhood radius during the first epoch and $\beta$ is a decay rate. The adjustment of the weight vectors in this implementation makes use of a batch algorithm, which replaces the weight vectors by the weighted average of the input samples. The weight function is determined by the neighbourhood kernel function (Vatanen et al., 2015). Thus, the updated weight vector $\mathbf{W^k}(t + 1)$ is defined as
+
 $$\mathbf{W^k}(t + 1) = \frac{\sum_{j = 1}^N h_{k, c_l}(t) \mathbf{Z_l}}{\sum_{j = 1}^N h_{k, c_l}(t)}$$
+
 where $N$ is the number of sample vectors in the input dataset.
 
 ### The `Self_Organising_Map` class
@@ -33,12 +41,14 @@ The included Jupyter notebook *example_SOM.ipynb* illustrates the general usage 
 ## **Iterative completion using Self-Organising Maps**
 ### Background
 A SOM can be used to fill in missing values of an input dataset by determining the BMU of a sample vector and substituting its missing features for the corresponding features of the BMU (e.g. Charantonis et al., 2015; Chapman & Charantonis, 2017; Puissant et al., 2021; Sloyan et al., 2023). In this case, the Euclidean distance is modified to only consider existing features in the sample vector. This is also referred to as truncated distance. The truncated distance is further modified by weighting the distance computation by the correlation between the available and the missing features. This means that if a feature is missing in a sample, those features that generally correlate more strongly with the missing feature are more relevant in the BMU search compared to the features that generally correlate less strongly. Therefore, the weighted truncated distance, referred to as similarity function in the following, can be calculated as
+
 $$
 sim(\mathbf{Z_l}, \mathbf{W^k}) = \sum_{n \in obs_l} \left[
     \left( 1 + \sum_{m \in miss_l} (cor_{n, m})^2 \right)
     \times (z_{j, n} - w_n^k)^2
 \right]
 $$
+
 where $obs_l$ corresponds to the existing features in sample vector $\mathbf{Z_l}$, while $miss_l$ corresponds to the missing features. $cor$ is an $N \times N$ matrix, where $N$ is the number of features in $\mathbf{Z}$. This matrix contains the Spearman correlation coefficients between each pair of features in $\mathbf{Z}$. It is computed prior to applying the ITCOMPSOM method.
 
 | ![Schematic of the ITCOMPSOM method](schematic_ITCOMPSOM.png) | 
