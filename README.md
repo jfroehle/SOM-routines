@@ -1,7 +1,7 @@
 # **A self-organising map algorithm**
 This repository contains an implemention of the Self-Organising Map (SOM) algorithm and an implemention of the ITCOMPSOM method in Python. The latter is a method to iteratively fill missing values in a dataset using SOMs.
 
-${\displaystyle {\color{red}\mathbf{Note\ of\ caution:}}}$ The examples applying the SOM and ITCOMPSOM algorithms provided in this repository are only for illustration purposes. Generally, careful hyperparameter tuning is necessary, such that good results are obtained while not overfitting the training data! This was not considered for the presented examples.
+${\Large{\color{red}\mathbf{Note\ of\ caution:}}}$ The examples applying the SOM and ITCOMPSOM algorithms provided in this repository are only for illustration purposes. Generally, careful hyperparameter tuning is necessary, such that good results are obtained while not overfitting the training data! This was not considered for the presented examples.
 
 ---
 ## **Self-Organising Maps**
