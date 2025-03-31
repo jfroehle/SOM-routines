@@ -307,7 +307,7 @@ class Self_Organising_Map:
     a rectangle, a rhombus or a regular hexagon. If the lattice is not shaped
     as a hexagon and the number of rows and columns is not specified, the
     number of rows and columns will be determined based on the ratio between
-    the two largest eigenvalues of training dataset.
+    the two largest eigenvalues of the training dataset.
 
     Attributes
     ----------
