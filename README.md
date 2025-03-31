@@ -76,7 +76,7 @@ The included Jupyter notebook *example_ITCOMPSOM.ipynb* illustrates the general 
 >
 > Puissant, A.; El Hourany, R.; Charantonis, A. A.; Bowler, C. & Thiria, S. (2021). Inversion of Phytoplankton Pigment Vertical Profiles from Satellite Data Using Machine Learning. *Remote Sensing, 13 (8)*. doi:[10.3390/rs13081445](https://www.doi.org/10.3390/rs13081445)
 >
-> Sloyan, B. M.; Chapman, C. C.; Cowley, R. & Charantonis, A. A. (2023). Application of Machine Learning Techniques to Ocean Mooring Time Series Data. *Journal of Atmospheric and Oceanic Technology, 40 (3)*, 241–260. doi:[10.1175/JTECHD-21-0183.1](https://www.doi.org/10.1175/JTECH-D-21-0183.1)
+> Sloyan, B. M.; Chapman, C. C.; Cowley, R. & Charantonis, A. A. (2023). Application of Machine Learning Techniques to Ocean Mooring Time Series Data. *Journal of Atmospheric and Oceanic Technology, 40 (3)*, 241–260. doi:[10.1175/JTECH-D-21-0183.1](https://www.doi.org/10.1175/JTECH-D-21-0183.1)
 >
 > Ultsch, A. (1995). Self organizing neural networks perform different from statistical k-means clsutering. *Gesellschaft f. Klassifikation*. (Basel, 8th-10th March)
 >
